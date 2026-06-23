@@ -1,115 +1,273 @@
-# PRACT2 - Limpieza y análisis del dataset de bibliotecas de Barcelona
+# Barcelona Library Catalog Access Analysis
 
-## Integrantes del grupo
+Data cleaning, feature engineering and statistical analysis project focused on understanding which institutional and territorial factors are associated with online catalog availability across libraries in the province of Barcelona.
 
-- Víctor Suesta Arribas
-- Antonio José Paredes de la Sal
+## Project Overview
 
-## Objetivo de la práctica
+This project analyzes a dataset of libraries located in Barcelona province. Each record represents one library and includes information such as municipality, library type, ownership, management model, website availability, online catalog access, foundation year and additional municipal indicators.
 
-Este repositorio contiene el trabajo realizado para la Práctica 2 de la asignatura **Tipología y ciclo de vida de los datos**.
+The main analytical question is:
 
-El objetivo de esta práctica es continuar el trabajo iniciado en la Práctica 1, aplicando procesos de integración, selección, limpieza, validación, análisis y visualización sobre el dataset de bibliotecas de la provincia de Barcelona obtenido mediante web scraping.
+> Which institutional and territorial characteristics are associated with a library having online catalog access?
 
-La pregunta principal del análisis es:
+To answer this question, the original dataset was cleaned, enriched with municipal-level information, transformed into a modeling-ready dataset and analyzed using supervised learning, unsupervised learning and statistical hypothesis testing.
 
-**¿Qué características territoriales e institucionales se asocian con que una biblioteca disponga de acceso a catálogo en línea?**
+## Main Techniques Used
 
-Para ello se ha definido como variable objetivo `tiene_catalogo`, creada a partir de la variable original `acceso_catalogo`.
+- Data cleaning and validation
+- Missing value analysis
+- Median imputation
+- Feature engineering
+- Categorical variable simplification
+- Outlier detection using the IQR method
+- Logistic Regression
+- K-Means clustering
+- Chi-square hypothesis testing
+- Data visualization
+- Reproducible Python workflow
 
-## Estructura del repositorio
+## Repository Structure
 
-El repositorio se organiza en tres carpetas principales:
+```text
+barcelona-library-catalog-access-analysis/
+│
+├── README.md
+├── .gitignore
+├── requirements.txt
+│
+├── dataset/
+│   ├── bibliotecas_barcelona_original.csv
+│   ├── municipios_idescat_mas_20000_2025.csv
+│   ├── bibliotecas_barcelona_integrado_provisional.csv
+│   ├── bibliotecas_barcelona_modelo_base.csv
+│   ├── bibliotecas_barcelona_modelo_limpio.csv
+│   ├── bibliotecas_barcelona_modelo_tipado.csv
+│   └── bibliotecas_barcelona_final_analizado.csv
+│
+├── source/
+│   ├── 01_integracionyseleccion.py
+│   ├── 02_limpieza.py
+│   └── 03_analisis.py
+│
+└── docs/
+    └── figures/
+        ├── boxplot_antiguedad_biblioteca.svg
+        ├── boxplot_bibliotecas_municipio.svg
+        ├── boxplot_densidad_hab_km2.svg
+        ├── boxplot_poblacion_municipio.svg
+        ├── clusters_kmeans_pca.svg
+        ├── coeficientes_logistica.svg
+        ├── contraste_catalogo_tipologia.svg
+        ├── histograma_antiguedad_biblioteca.svg
+        ├── histograma_bibliotecas_municipio.svg
+        ├── histograma_densidad_hab_km2.svg
+        ├── histograma_poblacion_municipio.svg
+        ├── matriz_confusion_logistica.svg
+        └── perfil_clusters_kmeans.svg
+```
 
-- `dataset/`: contiene los datasets originales, intermedios y finales.
-- `source/`: contiene los scripts utilizados para la integración, limpieza y análisis.
-- `docs/`: contiene borradores de memoria, diagnósticos, resultados y figuras.
+## Dataset
 
-## Archivos incluidos
+The project starts from a library dataset containing 519 records from Barcelona province.
 
-### Carpeta `dataset/`
+The final modeling dataset is available at:
 
-- `bibliotecas_barcelona_original.csv`: dataset original obtenido en la Práctica 1.
-- `municipios_idescat_mas_20000_2025.csv`: tabla municipal externa usada para enriquecer el dataset.
-- `bibliotecas_barcelona_integrado_provisional.csv`: dataset tras la integración inicial.
-- `bibliotecas_barcelona_modelo_base.csv`: dataset con la selección inicial de variables para el modelo.
-- `bibliotecas_barcelona_modelo_limpio.csv`: dataset tras la gestión inicial de valores ausentes.
-- `bibliotecas_barcelona_modelo_tipado.csv`: dataset tras la gestión de tipos y simplificación de variables categóricas.
-- `bibliotecas_barcelona_final_analizado.csv`: dataset final preparado para la entrega.
+```text
+dataset/bibliotecas_barcelona_final_analizado.csv
+```
 
-### Carpeta `source/`
+The dataset combines the original library information with additional municipal-level indicators from Idescat.
 
-- `01_integracionyseleccion.py`: genera el dataset integrado y selecciona las variables iniciales de análisis.
-- `02_limpieza.py`: gestiona valores ausentes, tipos de datos, categorías, duplicados y valores extremos.
-- `03_analisis.py`: aplica el modelo supervisado, el modelo no supervisado y el contraste de hipótesis.
+## Main Features Created
 
-### Carpeta `docs/`
+Several variables were created during the feature engineering process:
 
-- `borrador_apartados_1_2_3.md`: borrador de los apartados iniciales de la memoria.
-- `diagnostico_limpieza_3_1.xlsx`: diagnóstico de nulos, ceros y valores vacíos.
-- `diagnostico_tipos_3_2.xlsx`: diagnóstico y decisiones sobre tipos de datos.
-- `diagnostico_limpieza_3_4.xlsx`: validaciones adicionales de limpieza.
-- `resultados_modelo_supervisado.xlsx`: métricas y resultados del modelo supervisado.
-- `resultados_modelo_no_supervisado.xlsx`: resultados del modelo no supervisado.
-- `contraste_hipotesis_4_2.xlsx`: resultados del contraste chi-cuadrado.
-- `figures/`: carpeta con las figuras generadas durante la limpieza y el análisis.
+- `tiene_web`: indicates whether the library has a website.
+- `tiene_catalogo`: indicates whether the library has online catalog access.
+- `anio_fundacion_missing`: indicates whether the foundation year is missing.
+- `anio_fundacion_num`: numeric version of the foundation year.
+- `antiguedad_biblioteca`: estimated library age using 2026 as reference year.
+- `bibliotecas_municipio`: number of libraries in the same municipality.
+- `poblacion_municipio`: municipal population when available.
+- `densidad_hab_km2`: population density by municipality.
+- `tiene_poblacion_externa`: indicates whether external municipal data was available.
+- `bibliotecas_por_10000_habitantes`: number of libraries per 10,000 inhabitants.
 
-## Ejecución del código
+## Workflow
 
-Para reproducir el proyecto desde la raíz del repositorio:
+The project follows three main steps.
+
+### 1. Data Integration and Feature Selection
+
+Implemented in:
+
+```text
+source/01_integracionyseleccion.py
+```
+
+This script:
+
+- Loads the original library dataset.
+- Adds derived variables.
+- Integrates external municipal data.
+- Normalizes municipality names before joining.
+- Selects the initial variables for modeling.
+- Prevents data leakage by excluding variables directly derived from the target.
+
+### 2. Data Cleaning and Validation
+
+Implemented in:
+
+```text
+source/02_limpieza.py
+```
+
+This script:
+
+- Reviews missing values, empty values and zeros.
+- Handles missing numerical values using median imputation.
+- Creates imputation indicator variables.
+- Validates binary variables.
+- Simplifies high-cardinality categorical variables.
+- Checks duplicates and internal consistency.
+- Detects potential outliers using the IQR method.
+
+### 3. Modeling and Statistical Analysis
+
+Implemented in:
+
+```text
+source/03_analisis.py
+```
+
+This script applies:
+
+- Logistic Regression as a supervised model.
+- K-Means clustering as an unsupervised model.
+- Chi-square hypothesis testing to evaluate the association between library type and catalog availability.
+- Visualizations for model interpretation and exploratory analysis.
+
+## Modeling Approach
+
+### Supervised Learning
+
+A Logistic Regression model was used to predict whether a library has online catalog access.
+
+The target variable was:
+
+```text
+tiene_catalogo
+```
+
+The model used numerical, binary and simplified categorical variables. Categorical features were encoded using one-hot encoding, and numerical features were standardized.
+
+Main evaluation metrics:
+
+```text
+Accuracy: 0.756
+F1 Macro: 0.686
+ROC AUC: 0.887
+```
+
+The model showed a reasonable ability to distinguish between libraries with and without online catalog access.
+
+### Unsupervised Learning
+
+K-Means clustering was used to identify library profiles without using the target variable during training.
+
+Different values of `k` were tested, and `k = 3` was selected based on the silhouette score.
+
+The clustering results suggested three broad profiles:
+
+1. A small group of older and more specialized libraries.
+2. A large group mainly composed of public local libraries.
+3. A more urban and specialized group, especially concentrated in dense municipalities.
+
+### Hypothesis Testing
+
+A chi-square test was used to analyze the association between library type and online catalog availability.
+
+The test showed a statistically significant association between both variables.
+
+Main result:
+
+```text
+Chi-square statistic: 117.370
+p-value: 3.26e-26
+Cramer's V: 0.476
+```
+
+This suggests that catalog availability is not evenly distributed across library types.
+
+## Key Insights
+
+- Public and university libraries show very high online catalog availability.
+- Specialized libraries present a more heterogeneous situation.
+- Website availability is positively associated with online catalog access.
+- Library type is one of the most relevant factors in explaining catalog availability.
+- External municipal data adds useful territorial context, although it is only available for municipalities above 20,000 inhabitants.
+
+## Visual Outputs
+
+The folder `docs/figures/` contains the main visual outputs generated during the analysis, including:
+
+- Histograms and boxplots for numerical variables.
+- Logistic Regression confusion matrix.
+- Logistic Regression coefficient plot.
+- K-Means PCA visualization.
+- Cluster profile visualization.
+- Catalog availability by library type.
+
+## How to Run the Project
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Suesta/barcelona-library-catalog-access-analysis.git
+cd barcelona-library-catalog-access-analysis
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+Run the scripts in order:
+
+```bash
 python source/01_integracionyseleccion.py
 python source/02_limpieza.py
 python source/03_analisis.py
 ```
 
-## Flujo de trabajo
+## Dependencies
 
-El flujo seguido en la práctica es el siguiente:
+The main Python libraries used are:
 
-1. Cargar el dataset original de bibliotecas obtenido en la Práctica 1.
-2. Integrar información municipal externa procedente de Idescat.
-3. Crear variables derivadas útiles para el análisis.
-4. Seleccionar las variables de interés.
-5. Gestionar valores ausentes y tipos de datos.
-6. Simplificar variables categóricas.
-7. Revisar duplicados, coherencia interna y valores extremos.
-8. Aplicar un modelo supervisado para analizar la disponibilidad de catálogo en línea.
-9. Aplicar un modelo no supervisado para identificar grupos de bibliotecas.
-10. Aplicar un contraste chi-cuadrado entre tipología de biblioteca y disponibilidad de catálogo.
-11. Generar tablas y figuras para interpretar los resultados.
+- pandas
+- scikit-learn
+- scipy
 
-## Variables principales creadas
-
-* `tiene_web`: indica si la biblioteca tiene página web informada.
-* `tiene_catalogo`: indica si la biblioteca tiene acceso a catálogo en línea.
-* `anio_fundacion_missing`: indica si falta el año de fundación.
-* `anio_fundacion_num`: versión numérica del año de fundación.
-* `antiguedad_biblioteca`: antigüedad aproximada de la biblioteca.
-* `bibliotecas_municipio`: número de bibliotecas del dataset en el mismo municipio.
-* `poblacion_municipio`: población municipal procedente de Idescat, cuando está disponible.
-* `densidad_hab_km2`: densidad de población municipal.
-* `tiene_poblacion_externa`: indica si el registro se ha podido enriquecer con información municipal externa.
-* `bibliotecas_por_10000_habitantes`: tasa de bibliotecas por cada 10.000 habitantes.
-
-## Modelos y análisis realizados
-
-En el análisis se han aplicado tres procedimientos principales:
-
-1. **Modelo supervisado**: regresión logística para estudiar la disponibilidad de catálogo en línea.
-2. **Modelo no supervisado**: K-Means para identificar perfiles de bibliotecas.
-3. **Contraste de hipótesis**: prueba chi-cuadrado para analizar la asociación entre tipología de biblioteca y disponibilidad de catálogo.
-
-## Nota sobre la integración externa
-
-La tabla municipal externa utilizada contiene municipios catalanes de más de 20.000 habitantes. Por este motivo, no todos los municipios del dataset original tienen información poblacional integrada. Esta limitación se conserva explícitamente mediante la variable `tiene_poblacion_externa` y se gestiona posteriormente en la fase de limpieza.
-
-## Dataset final
-
-El dataset final preparado para la entrega se encuentra en:
+Exact versions are listed in:
 
 ```text
-dataset/bibliotecas_barcelona_final_analizado.csv
+requirements.txt
 ```
+
+## Data Sources
+
+The dataset was built from institutional open data sources:
+
+- Spanish Ministry of Culture: Spanish libraries directory.
+- Idescat: municipal indicators for Catalonia.
+
+## Notes
+
+The external municipal dataset only includes Catalan municipalities with more than 20,000 inhabitants. For this reason, not all libraries could be enriched with population and density indicators. This limitation is explicitly tracked using the variable `tiene_poblacion_externa`.
+
+## Author
+
+Víctor Suesta Arribas
+
+Mathematics graduate and Data Science master's student, focused on data analysis, machine learning and applied data projects.
