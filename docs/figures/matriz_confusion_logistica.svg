@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="500" viewBox="0 0 760 500">
+<rect width="100%" height="100%" fill="white"/>
+<text x="380" y="45" font-size="24" text-anchor="middle" font-family="Arial">Matriz de confusion - regresion logistica</text>
+<text x="320" y="90" font-size="15" text-anchor="middle">Prediccion: sin catalogo</text>
+<text x="580" y="90" font-size="15" text-anchor="middle">Prediccion: con catalogo</text>
+<text x="110" y="185" font-size="15" text-anchor="middle">Real: sin catalogo</text>
+<text x="110" y="365" font-size="15" text-anchor="middle">Real: con catalogo</text>
+<rect x="210" y="110" width="220" height="140" fill="rgba(76,120,168,0.36)" stroke="#333"/><text x="320" y="175" font-size="32" text-anchor="middle">22</text><text x="320" y="205" font-size="12" text-anchor="middle">Real sin catalogo / Pred sin catalogo</text><rect x="470" y="110" width="220" height="140" fill="rgba(76,120,168,0.24)" stroke="#333"/><text x="580" y="175" font-size="32" text-anchor="middle">6</text><text x="580" y="205" font-size="12" text-anchor="middle">Real sin catalogo / Pred con catalogo</text><rect x="210" y="290" width="220" height="140" fill="rgba(76,120,168,0.43)" stroke="#333"/><text x="320" y="355" font-size="32" text-anchor="middle">32</text><text x="320" y="385" font-size="12" text-anchor="middle">Real con catalogo / Pred sin catalogo</text><rect x="470" y="290" width="220" height="140" fill="rgba(76,120,168,0.90)" stroke="#333"/><text x="580" y="355" font-size="32" text-anchor="middle">96</text><text x="580" y="385" font-size="12" text-anchor="middle">Real con catalogo / Pred con catalogo</text>
+</svg>

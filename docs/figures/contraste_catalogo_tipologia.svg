@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+<rect width="100%" height="100%" fill="white"/>
+<text x="490.0" y="35" font-size="24" text-anchor="middle" font-family="Arial">Catalogo por tipologia simplificada</text>
+<line x1="300.00" y1="58" x2="300.00" y2="430" stroke="#ddd"/><text x="300.00" y="462" font-size="11" text-anchor="middle">0%</text><line x1="422.00" y1="58" x2="422.00" y2="430" stroke="#ddd"/><text x="422.00" y="462" font-size="11" text-anchor="middle">20%</text><line x1="544.00" y1="58" x2="544.00" y2="430" stroke="#ddd"/><text x="544.00" y="462" font-size="11" text-anchor="middle">40%</text><line x1="666.00" y1="58" x2="666.00" y2="430" stroke="#ddd"/><text x="666.00" y="462" font-size="11" text-anchor="middle">60%</text><line x1="788.00" y1="58" x2="788.00" y2="430" stroke="#ddd"/><text x="788.00" y="462" font-size="11" text-anchor="middle">80%</text><line x1="910.00" y1="58" x2="910.00" y2="430" stroke="#ddd"/><text x="910.00" y="462" font-size="11" text-anchor="middle">100%</text>
+<text x="285" y="94" font-size="12" text-anchor="end">Bibliotecas especializadas, especificas y otras</text><rect x="300" y="70" width="252.11" height="30" fill="#e45756"/><rect x="552.11" y="70" width="357.89" height="30" fill="#54a24b"/><text x="918" y="91" font-size="12">58.7% con catalogo</text><text x="285" y="164" font-size="12" text-anchor="end">Bibliotecas publicas</text><rect x="300" y="140" width="24.22" height="30" fill="#e45756"/><rect x="324.22" y="140" width="585.78" height="30" fill="#54a24b"/><text x="918" y="161" font-size="12">96.0% con catalogo</text><text x="285" y="234" font-size="12" text-anchor="end">Bibliotecas universitarias</text><rect x="300" y="210" width="17.20" height="30" fill="#e45756"/><rect x="317.20" y="210" width="592.80" height="30" fill="#54a24b"/><text x="918" y="231" font-size="12">97.2% con catalogo</text>
+<rect x="300" y="486" width="14" height="14" fill="#e45756"/>
+<text x="320" y="498" font-size="13">Sin catalogo</text>
+<rect x="430" y="486" width="14" height="14" fill="#54a24b"/>
+<text x="450" y="498" font-size="13">Con catalogo</text>
+</svg>
